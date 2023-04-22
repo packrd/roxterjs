@@ -1,6 +1,6 @@
 build/
 node_modules/
 src/
-/app.route.js
+app.route.js
 .npmignore
-.package-lock.json
+package-lock.json
