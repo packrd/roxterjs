@@ -1,6 +1,4 @@
 build/
 node_modules/
-src/
-app.route.js
 .npmignore
 package-lock.json

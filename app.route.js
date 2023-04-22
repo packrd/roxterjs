@@ -1,9 +1,9 @@
 import clientget from "./src/client/get.js";
-import passget from "./src/pass/get.js";
+import testget from "./src/test/get.js";
 
  export default {
 
 	"[GET] /client": clientget,
-	"[GET] /pass": passget,
+	"[GET] /test": testget,
 
  }

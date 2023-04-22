@@ -31,7 +31,7 @@ async function StreamPipeline () {
     }
 }
 
-async function Start() {
+async function RunPipe() {
 
     const pipeline = await StreamPipeline();
 
@@ -48,10 +48,13 @@ async function Start() {
 
 export const Start = async (props = false) => {
 
-    await Start();
+    await RunPipe();
 
     if(__ACTIVE__ && props)
         return Server(props);
 
     setTimeout(()=>Start(props), 3000);
 }
+
+/* import AppRoutes from "./app.route.js"
+(async()=>await Start(AppRoutes))(); */

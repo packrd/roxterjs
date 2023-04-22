@@ -1,6 +1,6 @@
 {
   "name": "roxterjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "O RoxterJS é uma proposta de framework para gerenciar requisições de diferentes verbos HTTPs",
   "main": "./index.js",
