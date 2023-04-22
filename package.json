@@ -1,0 +1,18 @@
+{
+  "name": "roxterjs",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "O RoxterJS é uma proposta de framework para gerenciar requisições de diferentes verbos HTTPs",
+  "main": "./index.js",
+  "author": "Rodrigo Buttura <rodrigovbuttura@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node --watch ./index.js"
+  },
+  "keywords": ["framework","https","roxter","api"],
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+  }
+}
