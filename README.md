@@ -7,7 +7,7 @@
 ### Status da api
 
 - [x] Staging
-- [ ] Instavel na versão x.x.x
+- [x] Estável na v0.0.6
 
 ### Features
 
@@ -27,22 +27,22 @@ $ npm init -y
 # app.route.js
 $ export default {}
 ```
-<p><i> O arquivo recebe o build das routes.</i></p>
+<p><i> O arquivo recebe o `build routes`.</i></p>
 
-<p> 3. Crie uma pasta <b> src </b> na raiz: </p>
+<p> 3. Crie a pasta <b> `src` </b> na raiz: </p>
 
 ```bash
-# Crie um novo package.json
+# root
 $ mkdir ./src
 ```
 <p> 4. Instale o pacote RoxterJS </p>
 
 ```bash
-# app.js
+# npm ou yarn
 $ npm i roxterjs
 ```
 
-<p> 5. Agora, vamos criar o arquivo <b>app.js</b> n raíz e importar o pacote RoxterJS </p>
+<p> 5. Agora, vamos criar o arquivo <b>app.js</b> na raíz e importar o pacote RoxterJS </p>
 
 ```bash
 # app.js
@@ -57,17 +57,18 @@ import { Start } from "roxterjs"
 
 ### Criando uma rota:
 
-<p> A partir da pasta "<i>__root</i>/<b>src</b>", criaremos dois níveis de subpastas: "/app/test".  </p>
-<p>Na pasta "/test/", adicionaremos o arquivo com o nome do verbo responsável por receber a requisição: <b>GET</b>, <b>POST</b>, <b>PUT</b> ou <b>DELETE</b>. Neste exemplo, iremos utilizar o <i>GET</i>, ficando o caminho da seguinte forma: "<i>__root</i>/<b>src/app/test/get.js</b>". Agora, é só colocar o lógica da função neste arquivo.</p>
+<p> A partir da pasta `<i>__root</i>/<b>src</b>`, criaremos dois níveis de subpastas: `/app/test`.  </p>
+<p>Na pasta `/test/`, adicionaremos o arquivo com o nome do verbo responsável por receber a requisição: <b>GET</b>, <b>POST</b>, <b>PUT</b> ou <b>DELETE</b>. Para este exemplo, iremos utilizar o `method` <i>GET</i>; seguindo o caminho: `<i>__root</i>/<b>src/app/test/get.js</b>`. Agora, é só colocar a lógica da função neste arquivo.</p>
 
 ```bash
-# Teste a função abaixo:
+# __root/src/app/test/get.js
+
 export default async function AppTest({ endJson }){
     return endJson({ status:200, data:{ name:"RoxterJS" }})
 }
 ```
 
-<p> O endepoint da requisição será <b>"http://localhost:3002/app/test"</b> </p>
+<p> O endepoint da requisição será <b>`http://localhost:3002/app/test`</b> </p>
 
 ```bash
 # Teste cURL:
@@ -76,65 +77,75 @@ $ curl -X GET http://localhost:3002/app/test
 
 ### Manipulando respostas
 ```bash
-# Retornando um Objeto, use "endJson({status:statusCode, ...})"
+# __root/src/app/test/get.js
+
+# Retornando um Objeto, use >  "endJson({status:statusCode, ...})"
 export default async function AppTest({ endJson }){
     return endJson({ status:200, data:{ name:"RoxterJS" }})
 }
 
-# Retornando uma String, use "end(statusCode, "...")
-export default async function AppTest({ endJson }){
+# __root/src/app/test/get.js
+
+# Retornando uma String, use > "end(statusCode, "...")
+export default async function AppTest({ end }){
     return end(201, "Texto de resposta")
 }
 ```
 
-### Recebendo parametros [keys]
+### Recebendo uma [key]
 
-<p> Para criar chaves (keys) em uma url, basta adicionar colchetes entre o nome de uma subpasta. Exemplo: <b>__root/src/app/test/[id]/get.js</b>.</p>
+<p> Para criar chaves (keys) em uma url, basta adicionar colchetes entre o nome de uma subpasta. Exemplo: <b>`__root/src/app/test/[id]/get.js`</b>.</p>
 
 ```bash
+# __root/src/app/test/get.js
+
 # Recebendo o valor de uma chave
 export default async function AppTest({ end, keys }){
     const { id } = await keys
     return end(200,`Sua chave é ${id}`);
 }
 ```
-<p> O endepoint da requisição será <b>"http://localhost:3002/app/test/191919"</b> </p>
+<p> O endepoint da requisição será <b>`http://localhost:3002/app/test/191919`</b> </p>
 
 ```bash
 # Teste cURL:
 $ curl -X GET http://localhost:3002/app/test/191919
 ```
 
-### Recebendo parametros [querys]
+### Recebendo uma [query]
 
-<p> Para pegar parâmetros de uma url:</p>
+<p> Para receber parâmetros de uma url:</p>
 
 ```bash
+# __root/src/app/test/get.js
+
 # Recebendo o valor de uma query
 export default async function AppTest({ end, query }){
     const { id } = await query
     return end(200,`Sua chave é ${id}`);
 }
 ```
-<p> O endepoint da requisição será <b>"http://localhost:3002/app/test/?id=191919"</b> </p>
+<p> O endepoint da requisição será <b>`http://localhost:3002/app/test/?id=191919`</b> </p>
 
 ```bash
 # Teste cURL:
 $ curl -X GET http://localhost:3002/app/test/?id=191919
 ```
 
-### Recebendo um body
+### Recebendo um [body]
 
-<p> Para receber dados via API, renomearemos o arquivo para <b>post.js</b> </p>
+<p> Para receber dados via API, criaremos um novo arquivo: <b>post.js</b> </p>
 
 ```bash
+# __root/src/app/test/post.js
+
 # Recebendo o body
 export default async function AppTest({ end, body }){
     const { id } = await body
     return end(200,`Sua chave é ${id}`);
 }
 ```
-<p> O endepoint da requisição será <b>"http://localhost:3002/app/test/"</b> </p>
+<p> O endepoint da requisição será <b>`http://localhost:3002/app/test/`</b> </p>
 
 ```bash
 # Teste cURL:
@@ -172,5 +183,5 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ### Autores
 
-:person_fencing: Rodrigo Buttura @robuttura
+:person_fencing: Rodrigo Buttura @robuttura <br>
 :1st_place_medal: <b>Fundador e colaborador Roxter</b>
