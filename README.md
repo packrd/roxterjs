@@ -7,7 +7,7 @@
 ### Status da api
 
 - [x] Staging
-- [x] Estável na v0.0.6
+- [x] Estável na v0.0.9
 
 ### Features
 
@@ -46,12 +46,8 @@ $ npm i roxterjs
 
 ```bash
 # app.js
-import AppRoute from "./app.route.js";
 import { Start } from "roxterjs"
-
-(async () => {
-    await Start(AppRoute);
-})();
+await Start();
 ```
 
 
@@ -184,4 +180,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 ### Autores
 
 :person_fencing: Rodrigo Buttura @robuttura <br>
-:1st_place_medal: <b>Fundador e colaborador Roxter</b>
+:1st_place_medal: <b>Colaborador Roxter</b>

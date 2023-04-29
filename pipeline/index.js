@@ -5,8 +5,8 @@ import {
     RoutesTransform,
     BuildRoutes,
     routes,
-    dirRoutes,
     Resets,
+    //dirRoutes,
 } from "./pipes.js";
 
 import {
@@ -46,12 +46,12 @@ async function RunPipe() {
     }
 };
 
-export const Start = async (props = false) => {
+export const Start = async () => {
 
     await RunPipe();
 
-    if(__ACTIVE__ && props)
-        return Server(props);
+    if(__ACTIVE__)
+        return await Server();
 
-    setTimeout(()=>Start(props), 3000);
+    setTimeout(async()=> await Start(), 3000);
 }

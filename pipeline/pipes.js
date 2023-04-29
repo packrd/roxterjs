@@ -111,10 +111,12 @@ async function Subscribe (values = "") {
         /* if(fs.statSync(__dirname__).isFile())
             await fs.unlinkSync(__dirname__); */
     
-        await fs.writeFileSync(__dirname__,`export default {}`)
-        await fs.writeFileSync(__dirname__, values, "utf-8");
+        //await fs.writeFileSync(__dirname__,`export default {}`)
+
+        if(__dirname__ && values)
+            fs.writeFileSync(__dirname__, values, "utf-8");
     
-        await Spawn({ cmd: "echo", prompt: [__dirname__]});
+        //await Spawn({ cmd: "echo", prompt: [__dirname__]});
 
         return true;
     }

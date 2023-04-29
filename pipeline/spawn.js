@@ -2,9 +2,6 @@ import { spawnSync } from "child_process";
 
 async function Spawn ({ cmd = "echo", prompt }) {
 
-  // ["text...",">","file"]
-  //console.log("PROMPT --->", [...prompt])
-
   try {
     const result = await spawnSync(cmd, [...prompt], { shell: true });
 
@@ -24,8 +21,6 @@ async function Spawn ({ cmd = "echo", prompt }) {
   catch {
     throw new Error(`File not save ${__dirname__}`)
   }
-
 }
-
 
 export default Spawn;
