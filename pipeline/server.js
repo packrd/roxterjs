@@ -3,6 +3,7 @@ import http from 'node:http';
 import fs from "fs";
 import path from "path";
 import { pathToFileURL } from 'node:url';
+import Spawn from './spawn.js';
 
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3002;
@@ -12,8 +13,10 @@ export default async function Server () {
     const fileRoute = path.resolve("./app.route.js");
     const isFileRoute = fs.statSync(fileRoute).isFile();
 
-    if(!isFileRoute)
-        throw new Error("Routes to server is not defined!");
+    if(!isFileRoute){
+        await fs.writeFileSync(fileRoute,`export default {}`);
+        Spawn({ cmd:"echo", prompt:[fileRoute]});
+    }
     
     const importRoute = await import(pathToFileURL(fileRoute).toString());
     const Router = importRoute.default;   
@@ -32,10 +35,10 @@ async function InitialServer (Router) {
         return !cks ? '' : JSON.parse(cks);
     };
     
-    const getStringFromQuery = (reqUrl) => {
+    const getStringFromQuery = async (reqUrl) => {
         let Map = {};
     
-        reqUrl?.split(/[\?|&|#,]+/)?.filter((d) => /=/g.test(d))?.map((d) => {
+        await reqUrl?.split(/[\?|&|#,]+/)?.filter((d) => /=/g.test(d))?.map((d) => {
             const [key,value] = d?.split("=");
             Map[key] = value
         });
@@ -45,16 +48,19 @@ async function InitialServer (Router) {
     
     const clearToFix = (value) => value?.split(/[?|#]/gi)[0];
     
-    http.createServer((req,res) => {
+    http.createServer(async (req,res) => {
             
         const { method, url, } = req;
         const fixUrl = url.split("/")?.map((d) => clearToFix(d));
         const fixRoute = Object.keys(Router);
 
+        const Url = clearToFix(url);
+        const body = await getStringFromUrl(req);
+        const query = await getStringFromQuery(url);
 
-        let [UTL, KEYS] = [{},{}];
+        let [UTL, keys] = [{},{}];
 
-        for (let fix of fixRoute){
+        for await (let fix of fixRoute){
 
             const fixCopy = fix;
             const firtsUrl = fix?.split(" ");
@@ -64,9 +70,9 @@ async function InitialServer (Router) {
             
             if(findParams[0]){
 
-                findParams.map((r) =>{ 
+                await findParams.map((r) =>{ 
                     fix = fix?.replace(params[r.index],fixUrl[r.index]||"[unfound]");
-                    KEYS[params[r.index].replace(/\[|\]/g,"")] = fixUrl[r.index];
+                    keys[params[r.index].replace(/\[|\]/g,"")] = fixUrl[r.index];
                 });
     
                 UTL[fix] = Router[fixCopy];
@@ -76,26 +82,25 @@ async function InitialServer (Router) {
             }
         }
 
-        const Url = clearToFix(url);
-        const body = getStringFromUrl(req);
-        const query = getStringFromQuery(url);
-    
+        const stream = UTL[`[${method}] ${Url}`]
+        
+        if(stream){
 
-        return UTL[`[${method}] ${Url}`]({ 
-            req, 
-            res, 
-            keys: KEYS, 
-            body, 
-            query,
-            endJson:({ status, ...props }) => {
-                res.status = status || 201;
-                res.end(JSON.stringify({ ...props }));
-            },
-            end:(status, props) => {
-                res.status = status || 201 ;
-                res.end(props);
-            }
-        });
+            return await UTL[`[${method}] ${Url}`]({ 
+                req, res, keys, body, query,
+                endJson:({ status, ...props }) => {
+                    res.status = status || 201;
+                    return res.end(JSON.stringify({ status, ...props }));
+                },
+                end:(status, props) => {
+                    res.status = status || 201 ;
+                    return res.end(props);
+                }
+            });
+        }
+        else {
+            res.end("Roxter API not found");
+        }
         
     }).listen(PORT, HOST, () => console.log(`[ROXTER] > Running at http://${HOST}:${PORT}`));
 }

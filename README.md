@@ -7,7 +7,7 @@
 ### Status da api
 
 - [x] Staging
-- [x] Estável na v0.0.9
+- [x] Estável na v0.0.10
 
 ### Features
 
