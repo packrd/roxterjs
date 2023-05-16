@@ -5,8 +5,9 @@ import path from "path";
 import { pathToFileURL } from 'node:url';
 import Spawn from './spawn.js';
 
-const HOST = process.env.HOST || '127.0.0.1';
-const PORT = process.env.PORT || 3002;
+const HOST = process.env.HOSTNAME;
+const PORT = process.env.PORT || 3012;
+const MODE_ROXTER = process.env.ROXTER_START_MODE || "PROD";
 
 export default async function Server () {
 
@@ -22,7 +23,7 @@ export default async function Server () {
     const Router = importRoute.default;   
     
     if(Router)
-        InitialServer(Router);
+        await InitialServer(Router);
     
 }
 
@@ -49,7 +50,16 @@ async function InitialServer (Router) {
     const clearToFix = (value) => value?.split(/[?|#]/gi)[0];
     
     http.createServer(async (req,res) => {
-            
+
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT, DELETE");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization, Issue-Key");
+
+        if(req.method === "OPTIONS"){
+            res.statusCode = 200;
+            return res.end("OK");
+        }
+        
         const { method, url, } = req;
         const fixUrl = url.split("/")?.map((d) => clearToFix(d));
         const fixRoute = Object.keys(Router);
@@ -102,5 +112,5 @@ async function InitialServer (Router) {
             res.end("Roxter API not found");
         }
         
-    }).listen(PORT, HOST, () => console.log(`[ROXTER] > Running at http://${HOST}:${PORT}`));
+    }).listen(PORT, HOST, () => console.log(`[ROXTER|MODE ${MODE_ROXTER}] > Running at http://${HOST}:${PORT}`));
 }

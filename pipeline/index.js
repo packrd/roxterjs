@@ -48,9 +48,12 @@ async function RunPipe() {
 
 export const Start = async () => {
 
-    await RunPipe();
+    const MODE_ROXTER = process.env.ROXTER_START_MODE || "PROD";
 
-    if(__ACTIVE__)
+    if(MODE_ROXTER !== "PROD")
+        await RunPipe();
+
+    if(__ACTIVE__ || MODE_ROXTER === "PROD")
         return await Server();
 
     setTimeout(async()=> await Start(), 3000);

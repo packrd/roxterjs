@@ -6,12 +6,13 @@
 
 ### Status da api
 
-- [x] Staging
-- [x] Estável na v0.0.10
+- [x] Aprovado em staging
+- [x] Estável na produção
+- [x] Última versão v0.0.15
 
 ### Features
 
-<p>O RoxterJS possui um mecanismo de rotas baseado no conceito de pastas, sendo, subpastas um mecanismo automático para gerar rotas aninhadas. O mecanismo iniciará na raíz, a partir de <b>__root/src</b>.</p>
+<p>O RoxterJS possui um mecanismo de rotas baseado no conceito de pastas, sendo, subpastas um mecanismo automático para gerar rotas aninhadas. O projeto se inicia na raíz, a partir de <b>/src</b>.</p>
 
 ### Primeiros passos (exemplo):
 
@@ -21,33 +22,33 @@
 # Crie um novo package.json
 $ npm init -y
 ```
-<p> 2. Crie um arquivo <b>app.route.js</b> na raiz com o seguinte código: </p>
 
-```bash
-# app.route.js
-$ export default {}
-```
-<p><i> O arquivo recebe o `build routes`.</i></p>
-
-<p> 3. Crie a pasta <b> `src` </b> na raiz: </p>
+<p> 2. Crie a pasta <b> `src` </b> na raiz: </p>
 
 ```bash
 # root
 $ mkdir ./src
 ```
-<p> 4. Instale o pacote RoxterJS </p>
+<p> 3. Instale o pacote RoxterJS </p>
 
 ```bash
 # npm ou yarn
 $ npm i roxterjs
 ```
 
-<p> 5. Agora, vamos criar o arquivo <b>app.js</b> na raíz e importar o pacote RoxterJS </p>
+<p> 4. Agora, vamos criar o arquivo <b>app.js</b> na raíz e importar o pacote RoxterJS </p>
 
 ```bash
 # app.js
 import { Start } from "roxterjs"
 await Start();
+```
+
+<p> 5. Para iniciar o projeto em modo de desenvolvimento, crie um arquivo <i><b>.env.test</b></i> e insira a seguinte variável: </p>
+
+```bash
+# .env.test
+ROXTER_START_MODE = "DEVELOP"
 ```
 
 
@@ -177,7 +178,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [ ] [TypeScript](https://www.typescriptlang.org/)
 
 
-### Autores
+### Colaboradores
 
-:person_fencing: Rodrigo Buttura @robuttura <br>
-:1st_place_medal: <b>Colaborador Roxter</b>
+:1st_place_medal: <b>@robuttura</b> 

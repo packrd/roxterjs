@@ -1,6 +1,5 @@
 import fs from 'fs';
-import path, { dirname } from "path";
-import Spawn from "./spawn.js";
+import path from "path";
 
 const __DIRNAME__ = process.env.DIRNAME || "./src";
 const __FILENAME__ = process.env.FILENAME || "app.route.js";
