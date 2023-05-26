@@ -1,4 +1,4 @@
-<h1> ROXTER JS </h1>
+<h1> ROXTERJS </h1>
 
 ![Generic badge](https://img.shields.io/badge/NODE-19.8.1-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/NPM-9.4.0-<COLOR>.svg)
 
@@ -8,7 +8,16 @@
 
 - [x] Aprovado em staging
 - [x] Estável na produção
-- [x] Última versão v0.0.15
+- [x] Última versão v0.0.16 
+
+### Atualizações 
+
+<p> 26/05/2023 -> Adicionado o módulo de cluster capaz de distribui o número de requisições, atuando como um balanceador de carga (load balancer) para os workers. O processo principal envia cada request para um único worker, alternando entre eles para tentar manter uma carga constante para cada um (estratégia round-robin). O cluster é capaz de entregar mais que o dobro do número de requests, e isto é um ganho excepcional. Vale lembrar que o poder de processamento da máquina não está sendo modificado, mas simplesmente se está evitando uma grande quantidade de tempo ocioso de CPU. Desta forma, a aplicação está fazendo um melhor aproveitamento dos recursos disponíveis. Você ainda poderá multiplicar o número de processamento através da variável. Exemplo: </p>
+
+```bash
+# .env.test
+$ ROXTER_OS_CPU_FORK = "2"
+```
 
 ### Features
 
@@ -36,12 +45,12 @@ $ mkdir ./src
 $ npm i roxterjs
 ```
 
-<p> 4. Agora, vamos criar o arquivo <b>app.js</b> na raíz e importar o pacote RoxterJS </p>
+<p> 4.(<b>update</b>) Agora, vamos criar o arquivo <b>app.js</b> na raíz e importar o pacote RoxterJS </p>
 
 ```bash
 # app.js
-import { Start } from "roxterjs"
-await Start();
+import Roxter from "roxterjs"
+await Roxter();
 ```
 
 <p> 5. Para iniciar o projeto em modo de desenvolvimento, crie um arquivo <i><b>.env.test</b></i> e insira a seguinte variável: </p>
@@ -65,7 +74,7 @@ export default async function AppTest({ endJson }){
 }
 ```
 
-<p> O endepoint da requisição será <b>`http://localhost:3002/app/test`</b> </p>
+<p> O endpoint da requisição será <b>`http://localhost:3002/app/test`</b> </p>
 
 ```bash
 # Teste cURL:
@@ -102,7 +111,7 @@ export default async function AppTest({ end, keys }){
     return end(200,`Sua chave é ${id}`);
 }
 ```
-<p> O endepoint da requisição será <b>`http://localhost:3002/app/test/191919`</b> </p>
+<p> O endpoint da requisição será <b>`http://localhost:3002/app/test/191919`</b> </p>
 
 ```bash
 # Teste cURL:
@@ -122,7 +131,7 @@ export default async function AppTest({ end, query }){
     return end(200,`Sua chave é ${id}`);
 }
 ```
-<p> O endepoint da requisição será <b>`http://localhost:3002/app/test/?id=191919`</b> </p>
+<p> O endpoint da requisição será <b>`http://localhost:3002/app/test/?id=191919`</b> </p>
 
 ```bash
 # Teste cURL:
@@ -142,7 +151,7 @@ export default async function AppTest({ end, body }){
     return end(200,`Sua chave é ${id}`);
 }
 ```
-<p> O endepoint da requisição será <b>`http://localhost:3002/app/test/`</b> </p>
+<p> O endpoint da requisição será <b>`http://localhost:3002/app/test/`</b> </p>
 
 ```bash
 # Teste cURL:

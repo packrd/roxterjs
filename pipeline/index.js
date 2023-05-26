@@ -14,7 +14,7 @@ import {
     WatchFiles,
 } from "./watchs.js";
 
-import Server from "./server.js";
+import { Cluster } from "./cluster.js";
 
 async function StreamPipeline () {
 
@@ -46,7 +46,7 @@ async function RunPipe() {
     }
 };
 
-export const Start = async () => {
+export default async function Initial (){
 
     const MODE_ROXTER = process.env.ROXTER_START_MODE || "PROD";
 
@@ -54,7 +54,7 @@ export const Start = async () => {
         await RunPipe();
 
     if(__ACTIVE__ || MODE_ROXTER === "PROD")
-        return await Server();
+        return await Cluster;
 
     setTimeout(async()=> await Start(), 3000);
 }

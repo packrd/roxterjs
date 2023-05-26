@@ -1,3 +1,2 @@
-import { Start } from "./pipeline/index.js";
-
-await Start()
+import Roxter from "./pipeline/index.js";
+await Roxter();

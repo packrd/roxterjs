@@ -1,19 +1,17 @@
 {
   "name": "roxterjs",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "type": "module",
   "description": "O RoxterJS é um framework para gerenciar requisições de diferentes verbos HTTPs e possui um mecanismo de rotas baseado no conceito de pastas e subpastas aninhadas.",
   "main": "./pipeline/index.js",
-  "author": "Rodrigo Buttura <rodrigovbuttura@gmail.com>",
+  "author": "PackRd <robuttura@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node ./index.js",
     "test": "node --watch ./index.js"
   },
-  "keywords": ["roxterjs","framework","https","roxter","apis","javascript","nodejs","method","nextjs","backend","endpoint","server"],
+  "keywords": ["roxterjs","framework","https","roxter","api","javascript","nodejs","router","cluster","nextjs","backend","endpoint","server","middleware","js","pipeline"],
   "dependencies": {
     "dotenv": "^16.0.3"
-  },
-  "devDependencies": {
   }
 }
