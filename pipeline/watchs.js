@@ -21,7 +21,7 @@ function WatchFiles (routes = [], callback = false) {
 }
 
 function WatchPath (paths = [], callback = false) {
-    const __dirname__ = path.resolve(process.env.DIRNAME || "src");
+    const __dirname__ = path.resolve(process.env.ROXTER_PATH || "src");
     const pathMap = paths.map(d=>path.resolve(d?.pathdir.slice(1).split("/").filter(a=>a).join("/")));
     
     for(let i of [...pathMap, __dirname__]){

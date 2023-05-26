@@ -4,8 +4,9 @@ import fs from "fs";
 import path from "path";
 import { pathToFileURL } from 'node:url';
 import Spawn from './spawn.js';
+import os from "node:os";
 
-const HOST = process.env.HOSTNAME;
+const HOST = process.env.ROXTER_HOSTNAME || os.hostname() || "localhost";
 const PORT = process.env.PORT || 3012;
 const MODE_ROXTER = process.env.ROXTER_START_MODE || "PROD";
 

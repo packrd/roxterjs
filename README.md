@@ -8,7 +8,8 @@
 
 - [x] Aprovado em staging
 - [x] Estável na produção
-- [x] Última versão v0.0.16 
+- [x] Última versão v0.0.17
+
 
 ### Atualizações 
 
@@ -60,6 +61,28 @@ await Roxter();
 ROXTER_START_MODE = "DEVELOP"
 ```
 
+<p> 6. Outras variáveis com valores default que podem ser alteradas: </p>
+
+6.1. Pasta onde as rotas serão construídas:
+
+```bash
+# .env.test ou .env (prod)
+ROXTER_PATH = "./src"
+```
+
+6.2. Porta de entrada:
+
+```bash
+# .env.test
+PORT = "3012"
+```
+
+6.3. Hostname:
+
+```bash
+# .env.test
+ROXTER_HOSTNAME = "localhost"
+```
 
 ### Criando uma rota:
 

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from "path";
 
-const __DIRNAME__ = process.env.DIRNAME || "./src";
+const __DIRNAME__ = process.env.ROXTER_PATH || "./src";
 const __FILENAME__ = process.env.FILENAME || "app.route.js";
 
 let routes = [];
@@ -55,8 +55,8 @@ async function RoutesTransform () {
             const dirArray = workdir?.slice(0,workdir.length-1)?.join("/").split("/");
             const method = fromImport?.split(".")[0]?.toUpperCase();
             const router = route?.split(".");
-            const opendir = `${process.env.PATH_ROUTER||"./src"}${route}`;
-            const pathdir = `${process.env.PATH_ROUTER||"./src"}${dirArray.join("/")}`;
+            const opendir = `${process.env.ROXTER_PATH||"./src"}${route}`;
+            const pathdir = `${process.env.ROXTER_PATH||"./src"}${dirArray.join("/")}`;
     
             routes.push({
                 dirArray,

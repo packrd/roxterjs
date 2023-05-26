@@ -1,6 +1,6 @@
 {
   "name": "roxterjs",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "type": "module",
   "description": "O RoxterJS é um framework para gerenciar requisições de diferentes verbos HTTPs e possui um mecanismo de rotas baseado no conceito de pastas e subpastas aninhadas.",
   "main": "./pipeline/index.js",
