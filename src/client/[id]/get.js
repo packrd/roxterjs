@@ -1,4 +1,4 @@
-export default async function Client ({ endJson, keys }) {
+export default async function Client ({ json, keys }) {
     const { id } = await keys;
-    return endJson ({ status:201, data:`This is RoxterJS id: ${id}`});
+    return json({ status:201, data:`Roxter ID: ${id}`});
 }

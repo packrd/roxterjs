@@ -1,10 +1,9 @@
 import { spawnSync } from "child_process";
 
-async function Spawn ({ cmd = "echo", prompt }) {
+async function Spawn ({ cmd = "echo", prompt = [] }) {
 
   try {
     const result = await spawnSync(cmd, [...prompt], { shell: true });
-
     if (result.status !== 0) {
       const message = `
         ORIGINAL CMD: ${cmd}
@@ -15,7 +14,6 @@ async function Spawn ({ cmd = "echo", prompt }) {
       `;
       throw new Error(message);
     }
-  
     return result;
   }
   catch {

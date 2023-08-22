@@ -9,10 +9,7 @@ import {
     //dirRoutes,
 } from "./pipes.js";
 
-import {
-    WatchPath,
-    WatchFiles,
-} from "./watchs.js";
+import { WatchPath, WatchFiles, } from "./watchs.js";
 
 import { Cluster } from "./cluster.js";
 
@@ -36,8 +33,8 @@ async function RunPipe() {
     const pipeline = await StreamPipeline();
 
     if(pipeline){
-        WatchPath(routes);
-        WatchFiles(routes, async () => {
+        await WatchPath(routes);
+        await WatchFiles(routes, async () => {
             Resets();
             await StreamPipeline();
         });
@@ -48,13 +45,8 @@ async function RunPipe() {
 
 export default async function Initial (){
 
-    const MODE_ROXTER = process.env.ROXTER_START_MODE || "PROD";
+    await RunPipe();
 
-    if(MODE_ROXTER !== "PROD")
-        await RunPipe();
-
-    if(__ACTIVE__ || MODE_ROXTER === "PROD")
-        return await Cluster;
-
-    setTimeout(async()=> await Start(), 3000);
+    if(__ACTIVE__ || (process.env.ROXTER_START_MODE === "PROD"))
+        await Cluster;
 }

@@ -1,3 +1,3 @@
-export default function Client ({ end }) {
-    return end(200,"Response string RoxterJS. Ok =D");
+export default function Test ({ end }) {
+    return end("Response string RoxterJS", 200);
 }

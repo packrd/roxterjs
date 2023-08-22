@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import { pathToFileURL } from 'node:url';
 import Spawn from './spawn.js';
+import getArgumentsFn from './argsfn.js';
 import os from "node:os";
 
 const HOST = process.env.ROXTER_HOSTNAME || os.hostname() || "localhost";
@@ -23,8 +24,7 @@ export default async function Server () {
     const importRoute = await import(pathToFileURL(fileRoute).toString());
     const Router = importRoute.default;   
     
-    if(Router)
-        await InitialServer(Router);
+    if(Router) await InitialServer(Router);
     
 }
 
@@ -39,12 +39,10 @@ async function InitialServer (Router) {
     
     const getStringFromQuery = async (reqUrl) => {
         let Map = {};
-    
         await reqUrl?.split(/[\?|&|#,]+/)?.filter((d) => /=/g.test(d))?.map((d) => {
             const [key,value] = d?.split("=");
             Map[key] = value
         });
-    
         return Map;
     }
     
@@ -98,19 +96,24 @@ async function InitialServer (Router) {
         if(stream){
 
             return await UTL[`[${method}] ${Url}`]({ 
-                req, res, keys, body, query,
-                endJson:({ status, ...props }) => {
+                req, 
+                res, 
+                keys, 
+                body, 
+                query,
+                json:function({ status, ...props }) {
                     res.status = status || 201;
                     return res.end(JSON.stringify({ status, ...props }));
                 },
-                end:(status, props) => {
-                    res.status = status || 201 ;
-                    return res.end(props);
+                end:function() {
+                    const { number = 201, string = "Roxter is OK" } = getArgumentsFn(...arguments);
+                    res.status = number ;
+                    return res.end(string);
                 }
             });
         }
         else {
-            res.end("Roxter API not found");
+            res.end("RoxterJS API not found");
         }
         
     }).listen(PORT, HOST, () => console.log(`[ROXTER|MODE ${MODE_ROXTER}] > Running at http://${HOST}:${PORT}`));

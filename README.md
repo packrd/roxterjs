@@ -8,10 +8,13 @@
 
 - [x] Aprovado em staging
 - [x] Estável na produção
-- [x] Última versão v0.0.17
+- [x] Última versão v0.0.18
 
 
 ### Atualizações 
+
+<p> 22/08/2023 - Para retornar uma resposta com JSON com a nova versão: json({...}) - anteriormente: endJson({...}) </p>
+<p> 22/08/2023 - Para retornar uma resposta em STRING: end(status, "contexto") - ou - end("contexto", status) - possibilitando escolher a ordem do parâmetro da função </p>
 
 <p> 26/05/2023 -> Adicionado o módulo de cluster capaz de distribui o número de requisições, atuando como um balanceador de carga (load balancer) para os workers. O processo principal envia cada request para um único worker, alternando entre eles para tentar manter uma carga constante para cada um (estratégia round-robin). O cluster é capaz de entregar mais que o dobro do número de requests, e isto é um ganho excepcional. Vale lembrar que o poder de processamento da máquina não está sendo modificado, mas simplesmente se está evitando uma grande quantidade de tempo ocioso de CPU. Desta forma, a aplicação está fazendo um melhor aproveitamento dos recursos disponíveis. Você ainda poderá multiplicar o número de processamento através da variável. Exemplo: </p>
 
@@ -92,8 +95,8 @@ ROXTER_HOSTNAME = "localhost"
 ```bash
 # __root/src/app/test/get.js
 
-export default async function AppTest({ endJson }){
-    return endJson({ status:200, data:{ name:"RoxterJS" }})
+export default async function AppTest({ json }){
+    return json({ status:200, data:{ name:"RoxterJS" }})
 }
 ```
 
@@ -108,9 +111,9 @@ $ curl -X GET http://localhost:3002/app/test
 ```bash
 # __root/src/app/test/get.js
 
-# Retornando um Objeto, use >  "endJson({status:statusCode, ...})"
-export default async function AppTest({ endJson }){
-    return endJson({ status:200, data:{ name:"RoxterJS" }})
+# Retornando um Objeto, use >  "json({status:statusCode, ...})"
+export default async function AppTest({ json }){
+    return json({ status:200, data:{ name:"RoxterJS" }})
 }
 
 # __root/src/app/test/get.js
