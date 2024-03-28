@@ -56,7 +56,7 @@ export default async function ServerRoxter () {
           let keys = {};
           const [methodRoute, urlRoute] = route.split('::');
           const currUrl = pathUrl.split('/');
-          const body = (method !== "get") ? await Body(req) : null;
+          const body = (pathMethod !== "get") ? await Body(req) : null;
           const params = getParams(url);
 
           const findSlugUrl = urlRoute?.split('/')?.filter(u=>!!u).map((u,index) => {
@@ -67,8 +67,10 @@ export default async function ServerRoxter () {
             } else return u;
           })?.join('/');
   
-          if(`${methodRoute}::${findSlugUrl}` === currentPathUrl) 
+          if(`${methodRoute}::${findSlugUrl}` === currentPathUrl) {
+            const body = (pathMethod !== "get") ? await Body(req) : null;
             return await ViewRoutes[route]({ req, res, keys, body, params });
+          }
 
           attempt++;
 
@@ -83,7 +85,7 @@ export default async function ServerRoxter () {
         return;
       } 
       catch(error) {
-        Log(`[error][red]Error handling request: ${JSON.stringify(error)}`);
+        Log(`[error][red]Error handling request: ${error}`);
         res.writeHead(500, { 'Content-Type': 'text/plain' });
         res.end('Internal Server Error');
       }

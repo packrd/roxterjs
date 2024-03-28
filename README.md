@@ -2,32 +2,37 @@
 
 ![Generic badge](https://img.shields.io/badge/NODE-19.8.1-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/NPM-9.4.0-<COLOR>.svg)
 
-<p align="left"> Pacote experimental, <b>open source</b>, para gerenciamento de requisições de verbos HTTP/s. </p>
+<p align="left"> Implemente endpoints de roteamento seguindo a convenção de estrutura de pastas, conforme praticado no <b>Next.js</b> </p>
+
+<p align="left"> Pacote <b>OpenSource</b>, desenvolvido por <b>RoxterXteezer.</b></p>
 
 ### Status da api
 
-- [x] Aprovado em staging
-- [x] Estável na produção
-- [x] Última versão v0.0.19
+- [x] Estável em produção
+- [x] Ultima versão 2024-03-28
+- [x] Versão atualizada v0.1.2
 
 
-### Atualizações 
+### Novidades 
 
-<p> 22/08/2023 - Para retornar uma resposta com JSON com a nova versão: json({...}) - anteriormente: endJson({...}) </p>
-<p> 22/08/2023 - Para retornar uma resposta em STRING: end(status, "contexto") - ou - end("contexto", status) - possibilitando escolher a ordem do parâmetro da função </p>
-
-<p> 26/05/2023 -> Adicionado o módulo de cluster capaz de distribui o número de requisições, atuando como um balanceador de carga (load balancer) para os workers. O processo principal envia cada request para um único worker, alternando entre eles para tentar manter uma carga constante para cada um (estratégia round-robin). O cluster é capaz de entregar mais que o dobro do número de requests, e isto é um ganho excepcional. Vale lembrar que o poder de processamento da máquina não está sendo modificado, mas simplesmente se está evitando uma grande quantidade de tempo ocioso de CPU. Desta forma, a aplicação está fazendo um melhor aproveitamento dos recursos disponíveis. Você ainda poderá multiplicar o número de processamento através da variável. Exemplo: </p>
+<p> Gerencie as principais <b>envs</b> em ambiente de teste. </p>
 
 ```bash
 # .env.test
-$ ROXTER_OS_CPU_FORK = "2"
+$ ROXTER_MODE = "dev" #não interfere no pacote (não obrigatório)
+$ ROXTER_PORT = 3333 #default -> porta de entrada (não obrigatório)
+$ ROXTER_HOSTNAME = "localhost" #default (não obrigatório)
+$ ROXTER_FILE_ROUTES = "app.routes.js" #default -> nome_do_arquivo onde as rotas serão salvas (não obrigatório)
+$ ROXTER_TIMEOUT = 10000 #default -> tempo limite de espera para resposta do serviço (não obrigatório)
+$ ROXTER_CPUS = 0 #default -> detalhes no texto abaixo
 ```
 
-### Features
+#### ROXTER_CPUS
 
-<p>O RoxterJS possui um mecanismo de rotas baseado no conceito de pastas, sendo, subpastas um mecanismo automático para gerar rotas aninhadas. O projeto se inicia na raíz, a partir de <b>/src</b>.</p>
+<p>Através da <i><b>env</b></i> <b>ROXTER_CPUS</b>, cria-se um cluster capaz de distribui o número de requisições, atuando como um balanceador de carga (load balancer) para os workers. O processo principal envia cada request para um único worker, alternando entre eles para tentar manter uma carga constante para cada um (estratégia round-robin). O cluster é capaz de entregar mais que o dobro do número de requests, e isto é um ganho excepcional. Vale lembrar que o poder de processamento da máquina não está sendo modificado, mas simplesmente se está evitando uma grande quantidade de tempo ocioso de CPU. Desta forma, a aplicação está fazendo um melhor aproveitamento dos recursos disponíveis. Você ainda poderá multiplicar o número de processamento através da variável. Exemplo:</p>
 
-### Primeiros passos (exemplo):
+
+#### Primeiros passos (exemplo):
 
 <p> 1. Inicie um novo projeto: </p>
 
@@ -36,173 +41,187 @@ $ ROXTER_OS_CPU_FORK = "2"
 $ npm init -y
 ```
 
-<p> 2. Crie a pasta <b> `src` </b> na raiz: </p>
-
-```bash
-# root
-$ mkdir ./src
-```
-<p> 3. Instale o pacote RoxterJS </p>
+<p> 2. Instale o pacote RoxterJS </p>
 
 ```bash
 # npm ou yarn
 $ npm i roxterjs
 ```
 
-<p> 4.(<b>update</b>) Agora, vamos criar o arquivo <b>app.js</b> na raíz e importar o pacote RoxterJS </p>
+<p> 3. Crie na raiz do seu projeto o arquivo <b>app.js</b>:  </p>
 
 ```bash
 # app.js
-import Roxter from "roxterjs"
-await Roxter();
+$ npm i roxterjs
 ```
 
-<p> 5. Para iniciar o projeto em modo de desenvolvimento, crie um arquivo <i><b>.env.test</b></i> e insira a seguinte variável: </p>
+<p> 3. Organize uma estrutura de pastas e defina qual será a <b>pasta principal</b> onde as rotas serão aninhadas. Neste exemplo, todas as rotas serão criadas a partir da pasta <b>/routes</b>: </p>
+
+- root_projeto
+  - app.js
+  - package.json
+  - README.md
+  - src/
+    - <b>routes/</b>
+    - controller/
+    - services/
+
+
+<p> 4. No arquivo principal do projeto (<b>app.js</b>), importaremos a biblioteca e, informaremos o <b>caminho exato da pasta raiz das rotas</b>. Exemplo: </p>
 
 ```bash
-# .env.test
-ROXTER_START_MODE = "DEVELOP"
-```
+# app.js
+import Roxter from "roxterjs";
+const roxter = await Roxter('./src/routes'); # <-caminho-> './src/routes'
 
-<p> 6. Outras variáveis com valores default que podem ser alteradas: </p>
-
-6.1. Pasta onde as rotas serão construídas:
-
-```bash
-# .env.test ou .env (prod)
-ROXTER_PATH = "./src"
-```
-
-6.2. Porta de entrada:
-
-```bash
-# .env.test
-PORT = "3012"
-```
-
-6.3. Hostname:
-
-```bash
-# .env.test
-ROXTER_HOSTNAME = "localhost"
+# A função abaixo irá construir as rotas e iniciar o servidor
+roxter.Start();
 ```
 
 ### Criando uma rota:
 
-<p> A partir da pasta `<i>__root</i>/<b>src</b>`, criaremos dois níveis de subpastas: `/app/test`.  </p>
-<p>Na pasta `/test/`, adicionaremos o arquivo com o nome do verbo responsável por receber a requisição: <b>GET</b>, <b>POST</b>, <b>PUT</b> ou <b>DELETE</b>. Para este exemplo, iremos utilizar o `method` <i>GET</i>; seguindo o caminho: `<i>__root</i>/<b>src/app/test/get.js</b>`. Agora, é só colocar a lógica da função neste arquivo.</p>
+<p> A partir da pasta <b>/routes</b>, todas as subpastas são rotas aninhadas. Exemplo:</p>
+
+- root_projeto
+  - app.js
+  - package.json
+  - README.md
+  - src/
+    - <b>routes/</b>
+        - api/
+            - view/
+
+<p> No exemplo acima, o <i><b>endpoint</b></i> ficará: </p>
 
 ```bash
-# __root/src/app/test/get.js
+# http://localhost:3333/api/view
+```
 
-export default async function AppTest({ json }){
-    return json({ status:200, data:{ name:"RoxterJS" }})
+<p> Para definir o <b>method</b> (get | post | put | delete) para o <i>endpoint</i>, basta adicionar o <b>verbo</b>(<i>method</i>) como <b>nome_do_arquivo.js</b>. Exemplo: </p>
+
+- root_projeto
+  - app.js
+  - package.json
+  - README.md
+  - src/
+    - <b>routes/</b>
+        - api/
+            - view/
+                - <b>get.js</b>
+
+<p> No exemplo acima, o <i><b>endpoint</b></i> se mantém: </p>
+
+```bash
+# http://localhost:3333/api/view
+```
+<p> Agora, é só colocar a lógica da função neste arquivo: </p>
+
+```bash
+# __root/src/routes/api/view/get.js
+
+export default async function App({ res }){
+    return res.end(JSON.stringfy({
+        name: "RoxterJs",
+        partner: "Roxter.Xteezer",
+        address: "São Paulo - SP"
+    }))
 }
 ```
 
-<p> O endpoint da requisição será <b>`http://localhost:3002/app/test`</b> </p>
+<p> Agora teste sua primeira rota: </p>
 
 ```bash
 # Teste cURL:
-$ curl -X GET http://localhost:3002/app/test
+$ curl -X GET http://localhost:3333/api/view
 ```
 
-### Manipulando respostas
-```bash
-# __root/src/app/test/get.js
+#### Recebendo uma [parâmetros]
 
-# Retornando um Objeto, use >  "json({status:statusCode, ...})"
-export default async function AppTest({ json }){
-    return json({ status:200, data:{ name:"RoxterJS" }})
-}
-
-# __root/src/app/test/get.js
-
-# Retornando uma String, use > "end(statusCode, "...")
-export default async function AppTest({ end }){
-    return end(201, "Texto de resposta")
-}
-```
-
-### Recebendo uma [key]
-
-<p> Para criar chaves (keys) em uma url, basta adicionar colchetes entre o nome de uma subpasta. Exemplo: <b>`__root/src/app/test/[id]/get.js`</b>.</p>
+<p> Para criar <b>"slugs"</b> na url, basta adicionar colchetes entre o nome da subpasta. Exemplo: __root/src/routes/api/view/<b>[id]</b>/get.js`.</p>
 
 ```bash
-# __root/src/app/test/get.js
+# __root/src/routes/api/view/[id]/get.js
 
-# Recebendo o valor de uma chave
-export default async function AppTest({ end, keys }){
-    const { id } = await keys
-    return end(200,`Sua chave é ${id}`);
+export default async function App({ res, keys }){
+    const { id } = await keys;
+    return res.end(`Sua chave é ${id}`);
 }
 ```
-<p> O endpoint da requisição será <b>`http://localhost:3002/app/test/191919`</b> </p>
+<p> O endpoint da requisição será <b>`http://localhost:3333/api/view/valor_do_id`</b> </p>
 
 ```bash
 # Teste cURL:
-$ curl -X GET http://localhost:3002/app/test/191919
+$ curl -X GET http://localhost:3333/api/view/1234
 ```
 
-### Recebendo uma [query]
+#### Recebendo [querys]
 
-<p> Para receber parâmetros de uma url:</p>
+<p> Para receber as "querys" pela url, adicione <b>params</b> na chave principal da função: </p>
 
 ```bash
-# __root/src/app/test/get.js
+# __root/src/routes/api/view/[id]/get.js
 
-# Recebendo o valor de uma query
-export default async function AppTest({ end, query }){
-    const { id } = await query
-    return end(200,`Sua chave é ${id}`);
+export default async function App({ res, keys, params }){
+    const { color } = await params;
+    const { id } = await keys;
+    return res.end(`Sua chave é ${id}, sua cor é ${color}`);
 }
 ```
-<p> O endpoint da requisição será <b>`http://localhost:3002/app/test/?id=191919`</b> </p>
+<p> O endpoint da requisição será <b>`http://localhost:3333/api/view/valor_do_id?color=sua_cor_preferida`</b> </p>
 
 ```bash
 # Teste cURL:
-$ curl -X GET http://localhost:3002/app/test/?id=191919
+$ curl -X GET http://localhost:3333/api/view/1234?color=azul
 ```
 
-### Recebendo um [body]
+#### Recebendo um [body]
 
-<p> Para receber dados via API, criaremos um novo arquivo: <b>post.js</b> </p>
+<p> Para receber dados da requisição, o <b>method</b> obrigatório é <b>post.js</b>. Por isso criaremos uma rota diferente e um novo arquivo. </p>
+
+- root_projeto
+  - app.js
+  - package.json
+  - README.md
+  - src/
+    - <b>routes/</b>
+        - api/
+            - view/
+                - <b>...</b>
+        - data/
+            - dong/
+                - <b>post.js</b>
+
+
+<p> No exemplo acima, o <i><b>endpoint</b></i> ficará: </p>
 
 ```bash
-# __root/src/app/test/post.js
+# http://localhost:3333/data/dong
+```
 
-# Recebendo o body
-export default async function AppTest({ end, body }){
-    const { id } = await body
-    return end(200,`Sua chave é ${id}`);
+<p> Para receber o "body", adicione <b>body</b> na chave principal da função: </p>
+
+
+```bash
+# __root/src/routes/data/dong/post.js
+
+export default async function App({ res, body }){
+    const { id } = await body;
+    return res.end(`Sua chave é ${id}`);
 }
 ```
-<p> O endpoint da requisição será <b>`http://localhost:3002/app/test/`</b> </p>
+<p> O endpoint da requisição será <b>`http://localhost:3333/app/dong/`</b> </p>
 
 ```bash
 # Teste cURL:
-$ curl -X POST http://localhost:3002/app/test/ -d '{"id":"191919"}'
+$ curl -X POST http://localhost:3333/data/dong -d '{"id":"191919"}'
 ```
 
-
-### 🎲 Rodando o projeto localhost
+### 🎲 Github 
 
 ```bash
 # Clone este repositório
 $ git clone https://github.com/packrd/roxterjs.git
-
-# Acesse a pasta do projeto no terminal/cmd
-$ cd roxterjs
-
-# Instale as dependências
-$ npm install
-
-# Execute a aplicação em modo de desenvolvimento
-$ npm run start
-
-# O servidor inciará na porta:3002 - acesse <http://127.0.0.1:3002>
 ```
-
 
 ### 🛠 Tecnologias
 
@@ -215,4 +234,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ### Colaboradores
 
-:1st_place_medal: <b>@robuttura</b> 
+:1st_place_medal: <b>@rodrigo.buttura</b> 
