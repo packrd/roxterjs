@@ -16,7 +16,7 @@ export default function findEndpoints(rootDir) {
                     const fileName = path.parse(file).name;
                     if (['post', 'get', 'put', 'delete'].some(prefix => fileName.startsWith(prefix))) {
                         const relativePath = path.relative(rootDir, filePath).replace(/\\/gi, '/')?.replace(file,'')?.slice(0,-1);
-                        const absolutePath = filePath?.replace(/\\/gi,'/');
+                        const absolutePath = './'+filePath?.replace(/\\/gi,'/');
                         const method = file.split(".")[0];
                         const ext = file.split(".")[1];
                         endpoints.push({

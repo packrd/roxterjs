@@ -82,8 +82,8 @@ export default async function ServerRoxter () {
         res.end('Internal Server Error');
         return;
       } 
-      catch {
-        Log(`[error][red]Error handling request: ${JSON.str}`);
+      catch(error) {
+        Log(`[error][red]Error handling request: ${JSON.stringify(error)}`);
         res.writeHead(500, { 'Content-Type': 'text/plain' });
         res.end('Internal Server Error');
       }
