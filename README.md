@@ -10,7 +10,7 @@
 
 - [x] Estável em produção
 - [x] Ultima versão 2024-03-28
-- [x] Versão atualizada v0.1.2
+- [x] Versão atualizada v0.1.3
 
 
 ### Novidades 

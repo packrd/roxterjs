@@ -56,7 +56,6 @@ export default async function ServerRoxter () {
           let keys = {};
           const [methodRoute, urlRoute] = route.split('::');
           const currUrl = pathUrl.split('/');
-          const body = (pathMethod !== "get") ? await Body(req) : null;
           const params = getParams(url);
 
           const findSlugUrl = urlRoute?.split('/')?.filter(u=>!!u).map((u,index) => {
@@ -68,7 +67,7 @@ export default async function ServerRoxter () {
           })?.join('/');
   
           if(`${methodRoute}::${findSlugUrl}` === currentPathUrl) {
-            const body = (pathMethod !== "get") ? await Body(req) : null;
+            const body = (pathMethod !== "get") ? await Body(req) : {};
             return await ViewRoutes[route]({ req, res, keys, body, params });
           }
 

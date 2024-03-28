@@ -1,6 +1,6 @@
 {
   "name": "roxterjs",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "O RoxterJS Router é um framework para gerenciar requisições de diferentes verbos HTTPs e possui um mecanismo de rotas baseado no conceito de pastas e subpastas aninhadas.",
   "main": "src/index.js",
   "type": "module",
