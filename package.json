@@ -1,17 +1,39 @@
 {
   "name": "roxterjs",
-  "version": "0.0.18",
+  "version": "0.1.0",
+  "description": "O RoxterJS Router é um framework para gerenciar requisições de diferentes verbos HTTPs e possui um mecanismo de rotas baseado no conceito de pastas e subpastas aninhadas.",
+  "main": "index.js",
   "type": "module",
-  "description": "O RoxterJS é um framework para gerenciar requisições de diferentes verbos HTTPs e possui um mecanismo de rotas baseado no conceito de pastas e subpastas aninhadas.",
-  "main": "./pipeline/index.js",
-  "author": "PackRd <robuttura@gmail.com>",
-  "license": "MIT",
+  "author": "PackRd <rodrigovbuttura@gmail.com>",
   "scripts": {
-    "start": "node ./index.js",
-    "test": "node --watch ./index.js"
+    "test": "node --watch src/index.js",
+    "build": "npm install",
+    "start": "node src/index.js"
   },
-  "keywords": ["roxterjs","framework","https","roxter","api","javascript","nodejs","router","cluster","nextjs","backend","endpoint","server","middleware","js","pipeline"],
+  "keywords": [
+    "router",
+    "routes",
+    "roxter",
+    "roxterjs",
+    "javascript",
+    "nodejs",
+    "typescript",
+    "js",
+    "middleware",
+    "nest",
+    "api",
+    "endpoint",
+    "backend",
+    "framework",
+    "rest",
+    "restapi",
+    "server",
+    "cluster",
+    "pipeline",
+    "express"
+  ],
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.4.5"
   }
 }

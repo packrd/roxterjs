@@ -1,4 +1,4 @@
-build/
 node_modules/
 .npmignore
-package-lock.json
+app.routes.*
+app.routes.*

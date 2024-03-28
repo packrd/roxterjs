@@ -8,7 +8,7 @@
 
 - [x] Aprovado em staging
 - [x] Estável na produção
-- [x] Última versão v0.0.18
+- [x] Última versão v0.0.19
 
 
 ### Atualizações 
