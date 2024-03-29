@@ -1,13 +1,12 @@
 import "./controller/dotenv/index.js";
-import os from "os";
 import cluster from "cluster";
 import StartProcess from "./compile.js";
-import { CPUS } from "./config/envs/index.js";
+import { CPUS, PROCESS } from "./config/envs/index.js";
 import Log from "./controller/log/index.js";
 
 const PrimaryProcess = async () => {
     const processOsCPU = +CPUS;
-    const processCount = os.cpus().length * processOsCPU;
+    const processCount = +PROCESS;
 
     if (processOsCPU > 0) {
         Log(`[ok]Primary [green]*${process.pid}* [white]is running...`);
@@ -39,6 +38,3 @@ export default async function RoxterJs (rootDir) {
       Start: async () => await PrimaryProcess()
   };
 }
-
-/* const roxter = await RoxterJs('./../test/src');
-roxter.Start(); */

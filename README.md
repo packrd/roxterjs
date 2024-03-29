@@ -9,8 +9,8 @@
 ### Status da api
 
 - [x] Estável em produção
-- [x] Ultima versão 2024-03-28
-- [x] Versão atualizada v0.1.3
+- [x] Ultima versão 2024-03-29
+- [x] Versão atualizada v0.1.4
 
 
 ### Novidades 
@@ -19,12 +19,12 @@
 
 ```bash
 # .env.test
-$ ROXTER_MODE = "dev" #não interfere no pacote (não obrigatório)
+$ ROXTER_MODE = "dev"|"prod" #default -> dev. Obrigatório mudar p/ "prod" em ambiente de produção.
 $ ROXTER_PORT = 3333 #default -> porta de entrada (não obrigatório)
 $ ROXTER_HOSTNAME = "localhost" #default (não obrigatório)
 $ ROXTER_FILE_ROUTES = "app.routes.js" #default -> nome_do_arquivo onde as rotas serão salvas (não obrigatório)
 $ ROXTER_TIMEOUT = 10000 #default -> tempo limite de espera para resposta do serviço (não obrigatório)
-$ ROXTER_CPUS = 0 #default -> detalhes no texto abaixo
+$ ROXTER_CPUS = 0 #default -> detalhes no texto abaixo...
 ```
 
 #### ROXTER_CPUS
@@ -52,7 +52,6 @@ $ npm i roxterjs
 
 ```bash
 # app.js
-$ npm i roxterjs
 ```
 
 <p> 3. Organize uma estrutura de pastas e defina qual será a <b>pasta principal</b> onde as rotas serão aninhadas. Neste exemplo, todas as rotas serão criadas a partir da pasta <b>/routes</b>: </p>
