@@ -10,7 +10,7 @@
 
 - [x] Estável em produção
 - [x] Ultima versão 2024-03-29
-- [x] Versão atualizada v0.1.4
+- [x] Versão atualizada v0.1.5
 
 
 ### Novidades 
@@ -214,6 +214,27 @@ export default async function App({ res, body }){
 # Teste cURL:
 $ curl -X POST http://localhost:3333/data/dong -d '{"id":"191919"}'
 ```
+
+#### Adicionando Resposta ao Header (setHeader)
+
+<p> Você pode adicionar o <b>header</b> em cada <b>endpoint</b> ou padronizar para todos, a partir do arquivo <b>app.js</b>. Veja como: </p>
+
+```bash
+# app.js
+import Roxter from "roxterjs";
+const roxter = await Roxter('./src/routes'); 
+
+# Adicione como parâmetro Start({ params })
+roxter.Start({
+    setHeaders:[
+        { name: "Access-Control-Allow-Origin", value: "*" },
+        { name: "Access-Control-Allow-Methods", value: "GET, OPTIONS, POST, PUT" },
+        { name: "Access-Control-Allow-Headers", value: "Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization" }
+    ]
+});
+```
+
+
 
 ### 🎲 Github 
 

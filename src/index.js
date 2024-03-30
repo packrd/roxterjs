@@ -4,7 +4,8 @@ import StartProcess from "./compile.js";
 import { CPUS, PROCESS } from "./config/envs/index.js";
 import Log from "./controller/log/index.js";
 
-const PrimaryProcess = async () => {
+const PrimaryProcess = async ({ ...props }) => {
+
     const processOsCPU = +CPUS;
     const processCount = +PROCESS;
 
@@ -13,17 +14,17 @@ const PrimaryProcess = async () => {
         Log(`[ok]Forking Server with [green]*${processCount}* [white]process`);
 
         for (let i = 0; i < processCount; i++) {
-            cluster.fork();
+            cluster.fork({ ...props });
         }
 
         cluster.on("exit", (worker, code, signal) => {
             if (code !== 0 && !worker.exitedAfterDisconnect) {
                 Log(`[error]Worker [green]*${worker.process.pid}* [red]died`);
-                cluster.fork();
+                cluster.fork({ ...props });
             }
         });
     } else {
-        cluster.fork();
+        cluster.fork({ ...props });
     }
 };
 
@@ -35,6 +36,15 @@ export default async function RoxterJs (rootDir) {
   if (cluster.isWorker) 
     return await WorkerProcess(rootDir);
   return {
-      Start: async () => await PrimaryProcess()
+      Start: async (props = {}) => await PrimaryProcess(props)
   };
 }
+
+/* const roxter = await RoxterJs('./src/routes');
+roxter.Start({
+    setHeaders:[
+        { name: "Access-Control-Allow-Origin", value: "*" },
+        { name: "Access-Control-Allow-Methods", value: "GET, OPTIONS, POST, PUT" },
+        { name: "Access-Control-Allow-Headers", value: "Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization, Issue-Key" }
+    ]
+}); */
