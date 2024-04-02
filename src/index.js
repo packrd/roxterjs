@@ -39,3 +39,6 @@ export default async function RoxterJs (rootDir) {
       Start: async (props = {}) => await PrimaryProcess(props)
   };
 }
+
+const roxter = await RoxterJs('./src/routes');
+roxter.Start();

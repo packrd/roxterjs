@@ -10,7 +10,7 @@
 
 - [x] Estável em produção
 - [x] Ultima versão 2024-04-02
-- [x] Versão atualizada v0.1.6
+- [x] Versão atualizada v0.1.7
 
 
 ### Novidades 
@@ -22,6 +22,7 @@
 $ ROXTER_MODE = "dev"|"prod" #default -> dev. Obrigatório mudar p/ "prod" em ambiente de produção.
 $ ROXTER_PORT = 3333 #default -> porta de entrada (não obrigatório)
 $ ROXTER_HOSTNAME = "localhost" #default (não obrigatório)
+$ ROXTER_FILE_PATH = "./" #default -> __root pasta onde o arquivo app.routes.js será criado (não obrigatório)
 $ ROXTER_FILE_ROUTES = "app.routes.js" #default -> nome_do_arquivo onde as rotas serão salvas (não obrigatório)
 $ ROXTER_TIMEOUT = 10000 #default -> tempo limite de espera para resposta do serviço (não obrigatório)
 $ ROXTER_CPUS = 0 #default -> detalhes no texto abaixo...

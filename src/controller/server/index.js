@@ -5,21 +5,21 @@ import fs from "node:fs";
 import { clearUrl } from "./clearUrl/index.js";
 import { Body } from "./body/index.js";
 import { getParams } from "./params/index.js";
-import { MODE, HOST, PORT, FILE_ROUTES } from "../../config/envs/index.js";
+import { MODE, HOST, PORT, FILE_PATH_ABSOLUTE } from "../../config/envs/index.js";
 import Log from "../log/index.js";
 
-const fileRoute = path.resolve(FILE_ROUTES);
+const fileRoute = path.resolve(FILE_PATH_ABSOLUTE);
 
 try {
   const stats = fs.statSync(fileRoute);
   if (!stats.isFile()) {
     fs.writeFileSync(fileRoute, `export default {}`);
-    Log(`[ok]Created file router [green]*${FILE_ROUTES}*`);
+    Log(`[ok]Created file router [green]*${FILE_PATH_ABSOLUTE}*`);
   }
 } catch (err) {
   if (err.code === 'ENOENT') {
     fs.writeFileSync(fileRoute, `export default {}`);
-    Log(`[ok]Created file router [green]*${FILE_ROUTES}*`);
+    Log(`[ok]Created file router [green]*${FILE_PATH_ABSOLUTE}*`);
   } 
   else
     Log('[error] ao verificar ou criar arquivo:', err);
@@ -42,7 +42,7 @@ export default async function ServerRoxter () {
         }
 
         const { method, url, } = req;
-        const importRoutes = await import(pathToFileURL(FILE_ROUTES).toString());
+        const importRoutes = await import(pathToFileURL(FILE_PATH_ABSOLUTE).toString());
         const ViewRoutes = importRoutes.default; 
         const pathUrl = clearUrl(url)?.split("/")?.filter(u=>!!u)?.join('/');
         const pathMethod = method?.toLocaleLowerCase() || "get";
