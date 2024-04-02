@@ -40,5 +40,5 @@ export default async function RoxterJs (rootDir) {
   };
 }
 
-const roxter = await RoxterJs('./src/routes');
-roxter.Start();
+/* const roxter = await RoxterJs('./src/routes');
+roxter.Start(); */
