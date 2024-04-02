@@ -39,12 +39,3 @@ export default async function RoxterJs (rootDir) {
       Start: async (props = {}) => await PrimaryProcess(props)
   };
 }
-
-/* const roxter = await RoxterJs('./src/routes');
-roxter.Start({
-    setHeaders:[
-        { name: "Access-Control-Allow-Origin", value: "*" },
-        { name: "Access-Control-Allow-Methods", value: "GET, OPTIONS, POST, PUT" },
-        { name: "Access-Control-Allow-Headers", value: "Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization, Issue-Key" }
-    ]
-}); */

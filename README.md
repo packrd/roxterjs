@@ -9,8 +9,8 @@
 ### Status da api
 
 - [x] Estável em produção
-- [x] Ultima versão 2024-03-29
-- [x] Versão atualizada v0.1.5
+- [x] Ultima versão 2024-04-02
+- [x] Versão atualizada v0.1.6
 
 
 ### Novidades 
