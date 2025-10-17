@@ -1,20 +1,18 @@
-import Compile from "./controller/fileCompile/index.js";
-import findEndpoints from "./controller/findEndpoints/index.js";
+import FileCompile from "./controller/fileCompile/index.js";
+import FindEndpoints from "./controller/findEndpoints/index.js";
 import Nest from "./controller/nest/index.js";
 import ServerRoxter from "./controller/server/index.js";
-import Log from "./controller/log/index.js";
+import fs from "node:fs";
 
-export default async function StartProcess (rootDir = null) {
-
-  if(!rootDir){
-    Log('[error] [red]*Erro:* [white]*Root folder* for routes management is incorrect')
-    return;
+export default async function StartProcess(rootDir = null) {
+  if (!fs.existsSync(rootDir)) {
+    fs.mkdirSync(rootDir, { recursive: true });
   }
 
-  const endpoints = findEndpoints(rootDir);
+  const endpoints = FindEndpoints(rootDir);
   const nest = Nest(endpoints);
   const router = await ServerRoxter();
-  
-  Compile(nest);
-  return router;  
+
+  FileCompile(nest);
+  return router;
 }

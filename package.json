@@ -1,12 +1,12 @@
 {
   "name": "roxterjs",
-  "version": "0.1.8",
-  "description": "O RoxterJS Router é um framework para gerenciar requisições de diferentes verbos HTTPs e possui um mecanismo de rotas baseado no conceito de pastas e subpastas aninhadas.",
+  "version": "0.1.9",
+  "description": "O RoxterJS é um framework BACKEND para gerenciar requisições de diferentes verbos HTTPs e possui um mecanismo de rotas baseado no conceito de pastas e subpastas aninhadas.",
   "main": "src/index.js",
   "type": "module",
-  "author": "PackRd <rodrigovbuttura@gmail.com>",
+  "author": "Rodrigo Vidal Buttura <rodrigovbuttura@gmail.com>",
   "scripts": {
-    "test": "node --watch src/index.js",
+    "dev": "node --watch ./app.dev.js",
     "build": "npm install",
     "start": "node src/index.js"
   },

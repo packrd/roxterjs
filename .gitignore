@@ -1,7 +1,9 @@
 node_modules/
 .npmignore
-src/routes/
+
+**/routes/
 app.routes.*
-app.route.*
+app.dev.*
+
 .env.test
 .env
